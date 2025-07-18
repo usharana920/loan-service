@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LoanServiceApplication {
 
 	public static void main(String[] args) {
+		log.info("Loan-application started.");
 		SpringApplication.run(LoanServiceApplication.class, args);
 	}
 
