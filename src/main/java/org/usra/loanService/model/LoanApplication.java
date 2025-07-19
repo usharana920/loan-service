@@ -22,23 +22,34 @@ import java.time.LocalDate;
 public class LoanApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer formId;
+    private int loanId;
+
     private String firstName;
     private String lastName;
+    private String email;
     private String occupation;
     private int salary;
     private int creditScore;
+    private int expenses;
 
+    private double loanAmount;
+    private double monthlyEMI;
     @Enumerated(EnumType.STRING)
     private LoanType loanType;
+    private LocalDate loanStartDate;
+    private LocalDate loanEndDate;
+    @CreationTimestamp
+    private LocalDate quoteCreatedAt;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_loanDuration_id")
+    private LoanDuration loanDuration;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_address_id")
     private Address address;
-
     private String phoneNumber;
+    private String socialSecurityNumber;
     @Enumerated(EnumType.STRING)
     private LoanStatus Status;
-    @CreationTimestamp
-    private LocalDate createdAt;
+
 }

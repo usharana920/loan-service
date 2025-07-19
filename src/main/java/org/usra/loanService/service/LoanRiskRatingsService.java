@@ -9,7 +9,10 @@ import org.usra.loanService.dto.LoanFormRequest;
 import org.usra.loanService.enums.LoanStatus;
 import org.usra.loanService.model.Address;
 import org.usra.loanService.model.LoanApplication;
+import org.usra.loanService.model.LoanDuration;
 import org.usra.loanService.repository.CustomerLoanRepository;
+import org.usra.loanService.util.DateUtil;
+import org.usra.loanService.util.LoanUtils;
 
 import static org.usra.loanService.constants.Constants.MINIMUM_CREDIT_SCORE;
 import static org.usra.loanService.constants.Constants.MINIMUM_SALARY;
@@ -31,18 +34,25 @@ public class LoanRiskRatingsService {
     }
 
     private void saveLoanApplicationForRecord(LoanFormRequest loanFormRequest) {
-        ModelMapper modelMapper = new ModelMapper();
         Address address;
         LoanApplication loanApplication;
+        ModelMapper modelMapper = new ModelMapper();
 
+        LoanDuration duration = DateUtil.calculateLoanDuration(loanFormRequest.getLoanStartDate(), loanFormRequest.getLoanEndDate());
+        double loanAPR = LoanUtils.calculateAPR(loanFormRequest);
+        log.debug("Loan APR is: {}", loanAPR);
+        double monthlyEMI = LoanUtils.calculateMonthlyEMI(loanFormRequest.getLoanAmount(), duration, loanAPR);
+        log.debug("monthly EMI is: {}", monthlyEMI);
 
         address = modelMapper.map(loanFormRequest.getAddressRequest(), Address.class);
         loanApplication = modelMapper.map(loanFormRequest, LoanApplication.class);
-        log.info("address: {}",address );
-        log.info("loanApplication {}",loanApplication);
+
         loanApplication.setLoanType(loanFormRequest.getLoanType());
         loanApplication.setAddress(address);
         loanApplication.setStatus(LoanStatus.fromValue("APPROVED"));
+
+        loanApplication.setLoanDuration(duration);
+        loanApplication.setMonthlyEMI(monthlyEMI);
         customerLoanRepository.save(loanApplication);
         log.debug("LoanRiskRatingsService::loanApplication saved successfully {}", loanApplication);
     }

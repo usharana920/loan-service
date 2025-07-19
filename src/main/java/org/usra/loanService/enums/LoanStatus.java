@@ -22,10 +22,10 @@ public enum LoanStatus {
 
     @JsonCreator
     public static LoanStatus fromValue(String value) {
-        for (LoanStatus type : LoanStatus.values()) {
-            if (type.displayName.equalsIgnoreCase(value) || type.name().equalsIgnoreCase(value.replace(" ","_"))) {
-                log.debug("loan type: {}", type);
-                return type;
+        for (LoanStatus loanStatus : LoanStatus.values()) {
+            if (loanStatus.displayName.equalsIgnoreCase(value) || loanStatus.name().equalsIgnoreCase(value.replace(" ","_"))) {
+                log.debug("Loan Status is : {}", loanStatus);
+                return loanStatus;
             }
         }
         throw new IllegalArgumentException("Unknown loan type: " + value);
