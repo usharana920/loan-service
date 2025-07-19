@@ -26,33 +26,37 @@ public class LoanRiskRatingsService {
     private final CustomerLoanRepository customerLoanRepository;
 
     public boolean evaluateLoanEligibility(LoanFormRequest loanFormRequest){
-        saveLoanApplicationForRecord(loanFormRequest);
         if (loanFormRequest!= null && loanFormRequest.getSalary() >= MINIMUM_SALARY && loanFormRequest.getCreditScore() >= MINIMUM_CREDIT_SCORE){
             return true;
         }
         return false;
     }
 
-    private void saveLoanApplicationForRecord(LoanFormRequest loanFormRequest) {
+    public void saveLoanApplicationForRecord(LoanFormRequest loanFormRequest, boolean isCustomerEligibleForLoan) {
         Address address;
         LoanApplication loanApplication;
+        LoanDuration duration;
         ModelMapper modelMapper = new ModelMapper();
-
-        LoanDuration duration = DateUtil.calculateLoanDuration(loanFormRequest.getLoanStartDate(), loanFormRequest.getLoanEndDate());
-        double loanAPR = LoanUtils.calculateAPR(loanFormRequest);
-        log.debug("Loan APR is: {}", loanAPR);
-        double monthlyEMI = LoanUtils.calculateMonthlyEMI(loanFormRequest.getLoanAmount(), duration, loanAPR);
-        log.debug("monthly EMI is: {}", monthlyEMI);
 
         address = modelMapper.map(loanFormRequest.getAddressRequest(), Address.class);
         loanApplication = modelMapper.map(loanFormRequest, LoanApplication.class);
 
         loanApplication.setLoanType(loanFormRequest.getLoanType());
         loanApplication.setAddress(address);
-        loanApplication.setStatus(LoanStatus.fromValue("APPROVED"));
 
-        loanApplication.setLoanDuration(duration);
-        loanApplication.setMonthlyEMI(monthlyEMI);
+        if(!isCustomerEligibleForLoan){
+            loanApplication.setStatus(LoanStatus.fromValue("DENIED"));
+        }else {
+            duration = DateUtil.calculateLoanDuration(loanFormRequest.getLoanStartDate(), loanFormRequest.getLoanEndDate());
+            double loanAPR = LoanUtils.calculateAPR(loanFormRequest);
+            log.debug("Loan APR is: {}", loanAPR);
+            double monthlyEMI = LoanUtils.calculateMonthlyEMI(loanFormRequest.getLoanAmount(), duration, loanAPR);
+            log.debug("monthly EMI is: {}", monthlyEMI);
+            loanApplication.setStatus(LoanStatus.fromValue("APPROVED"));
+            loanApplication.setLoanDuration(duration);
+            loanApplication.setMonthlyEMI(monthlyEMI);
+        }
+
         customerLoanRepository.save(loanApplication);
         log.debug("LoanRiskRatingsService::loanApplication saved successfully {}", loanApplication);
     }

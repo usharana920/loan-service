@@ -7,8 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 public enum LoanStatus {
 
     LOAN_APPROVED("APPROVED"),
-    LOAN_DENIED("DENIED"),
-    LOAN_UNDER_REVIEW("UNDER REVIEW");
+    LOAN_DENIED("DENIED");
 
     private final String displayName;
 
@@ -28,6 +27,6 @@ public enum LoanStatus {
                 return loanStatus;
             }
         }
-        throw new IllegalArgumentException("Unknown loan type: " + value);
+        throw new IllegalArgumentException("Unknown Loan Status: " + value);
     }
 }

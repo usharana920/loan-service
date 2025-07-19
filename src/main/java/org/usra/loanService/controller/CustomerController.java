@@ -31,6 +31,5 @@ public class CustomerController {
     public ResponseEntity<LoanProcessedStatus> getLoanStatus(@PathVariable int id){
         String status = customerLoanService.getLoanStatus(id);
         return ResponseEntity.ok(LoanProcessedStatus.builder().status(status).build());
-
     }
 }

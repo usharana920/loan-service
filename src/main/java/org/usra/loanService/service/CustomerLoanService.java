@@ -21,9 +21,12 @@ public class CustomerLoanService {
 
     public String processLoanApplication(LoanFormRequest loanFormRequest){
         boolean isCustomerEligibleForLoan = loanRiskRatingsService.evaluateLoanEligibility(loanFormRequest);
+
         if (isCustomerEligibleForLoan){
+            loanRiskRatingsService.saveLoanApplicationForRecord(loanFormRequest, true);
             return "Loan processed successfully";
         }else {
+            loanRiskRatingsService.saveLoanApplicationForRecord(loanFormRequest, false);
             return "Sorry! you are not eligible for loan at this time. Please try again later";
         }
     }
