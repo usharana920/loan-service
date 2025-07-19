@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.usra.loanService.dto.LoanFormRequest;
 import org.usra.loanService.model.LoanDuration;
 
+import java.util.Random;
+import java.util.UUID;
+
 @Slf4j
 @UtilityClass
 public class LoanUtils {
@@ -30,6 +33,11 @@ public class LoanUtils {
             return 3.5;
         }
         else return 1.99;
+    }
+
+    public String generateLoanQuoteId(){
+        Random random = new Random();
+        return String.valueOf(100_000_000 + random.nextInt(900_000_000));
     }
 
 }

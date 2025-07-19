@@ -43,6 +43,7 @@ public class LoanApplication {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_loanDuration_id")
     private LoanDuration loanDuration;
+    private String quoteId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_address_id")

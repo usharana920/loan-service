@@ -27,9 +27,9 @@ public class CustomerController {
         return ResponseEntity.ok(LoanApplicationResponse.builder().status(status).build());
     }
 
-    @GetMapping(value = "/getStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LoanProcessedStatus> getLoanStatus(@PathVariable int id){
-        String status = customerLoanService.getLoanStatus(id);
+    @GetMapping(value = "/getStatus/{quoteId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LoanProcessedStatus> getLoanStatus(@PathVariable String quoteId){
+        String status = customerLoanService.getLoanStatus(quoteId);
         return ResponseEntity.ok(LoanProcessedStatus.builder().status(status).build());
     }
 }

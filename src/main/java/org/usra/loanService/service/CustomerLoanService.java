@@ -31,8 +31,8 @@ public class CustomerLoanService {
         }
     }
 
-    public String getLoanStatus(int id){
-        Optional<LoanApplication> optionalLoanApplication = customerLoanRepository.findById(id);
+    public String getLoanStatus(String quoteId){
+        Optional<LoanApplication> optionalLoanApplication = customerLoanRepository.findByQuoteId(quoteId);
         if (optionalLoanApplication.isPresent()){
             return optionalLoanApplication.get().getStatus().getDisplayName();
         }

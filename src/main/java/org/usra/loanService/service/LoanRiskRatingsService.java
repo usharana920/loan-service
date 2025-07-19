@@ -38,11 +38,13 @@ public class LoanRiskRatingsService {
         LoanDuration duration;
         ModelMapper modelMapper = new ModelMapper();
 
+        String quoteId = LoanUtils.generateLoanQuoteId();
         address = modelMapper.map(loanFormRequest.getAddressRequest(), Address.class);
         loanApplication = modelMapper.map(loanFormRequest, LoanApplication.class);
 
         loanApplication.setLoanType(loanFormRequest.getLoanType());
         loanApplication.setAddress(address);
+        loanApplication.setQuoteId(quoteId);
 
         if(!isCustomerEligibleForLoan){
             loanApplication.setStatus(LoanStatus.fromValue("DENIED"));
