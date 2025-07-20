@@ -19,7 +19,6 @@ public class CustomerController {
 
     private final CustomerLoanService customerLoanService;
 
-
     @PostMapping(value = "/apply", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoanApplicationResponse> apply(@RequestBody LoanFormRequest loanFormRequest){
         log.info("inside apply controller. processing loan application");
