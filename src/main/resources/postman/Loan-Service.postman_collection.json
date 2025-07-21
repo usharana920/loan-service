@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "363e1d14-26d9-47c3-8cfc-ba03f7c280e0",
+		"name": "Loan-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34543874"
+	},
+	"item": [
+		{
+			"name": "ApplyLoan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-correlationId",
+						"value": "\"defb5667-64a1-4418-b0f7-07f4ee646ee1\"",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Momo\",\r\n    \"lastName\": \"Sharma\",\r\n    \"email\": \"Thapa99@gmail.com\",\r\n    \"occupation\": \"Engineer\",\r\n    \"salary\": 999999,\r\n    \"creditScore\": 550,\r\n    \"expenses\": 50000,\r\n    \"loanAmount\":\"70000\",\r\n    \"loanStartDate\":\"2023-09-02\",\r\n    \"loanEndDate\":\"2025-09-02\",\r\n    \"addressRequest\": {\r\n        \"streetName\": \"123 Myth road\",\r\n        \"city\": \"Japper\",\r\n        \"county\": \"Tege\",\r\n        \"country\": \"US\",\r\n        \"zipCode\": \"602040\"\r\n    },\r\n    \"loanType\": \"STUDENT_LOAN\",\r\n    \"phoneNumber\": \"1234567890\",\r\n    \"socialSecurityNumber\": \"999-213-9999\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/loan/apply",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"loan",
+						"apply"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLoanStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/loan/getStatus/102379868",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"loan",
+						"getStatus",
+						"102379868"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
