@@ -1,0 +1,19 @@
+{
+  "firstName": "Grace",
+  "lastName": "Thapa",
+  "email": "Thapa99@gmail.com",
+  "occupation": "Engineer",
+  "salary": 999999,
+  "creditScore": 670,
+  "expenses": 50000,
+  "addressRequest": {
+    "streetName": "123 Myth road",
+    "city": "Japper",
+    "county": "Tege",
+    "country": "US",
+    "zipCode": "602040"
+  },
+  "loanType": "STUDENT_LOAN",
+  "phoneNumber": "1234567890",
+  "socialSecurityNumber": "999-213-9999"
+}
