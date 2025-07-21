@@ -51,6 +51,7 @@ public class LoanApplication {
     private String phoneNumber;
     private String socialSecurityNumber;
     @Enumerated(EnumType.STRING)
-    private LoanStatus Status;
+    private LoanStatus status;
+    private String remarks;
 
 }

@@ -6,17 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AddressRequest {
-    private String streetName;
-    private String city;
-    private String county;
-    private String country;
-    private String state;
-    private String zipCode;
+public class LoanStatusRequest {
+    private String status;
+    private String remarks;
 }

@@ -47,7 +47,7 @@ public class LoanRiskRatingsService {
         loanApplication.setQuoteId(quoteId);
 
         if(!isCustomerEligibleForLoan){
-            loanApplication.setStatus(LoanStatus.fromValue("DENIED"));
+            loanApplication.setStatus(LoanStatus.fromValue("UNDER_REVIEW"));
         }else {
             duration = DateUtil.calculateLoanDuration(loanFormRequest.getLoanStartDate(), loanFormRequest.getLoanEndDate());
             double loanAPR = LoanUtils.calculateAPR(loanFormRequest);
@@ -63,4 +63,7 @@ public class LoanRiskRatingsService {
         log.debug("LoanRiskRatingsService::loanApplication saved successfully {}", loanApplication);
     }
 
+    public void updateLoanStatus(LoanApplication loanApplication) {
+        customerLoanRepository.save(loanApplication);
+    }
 }

@@ -20,6 +20,7 @@ public class Address {
     private String city;
     private String county;
     private String country;
+    private String state;
     private String zipCode;
 
 }

@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.usra.loanService.dto.LoanFormRequest;
+import org.usra.loanService.dto.LoanStatusRequest;
+import org.usra.loanService.enums.LoanStatus;
 import org.usra.loanService.model.LoanApplication;
 import org.usra.loanService.repository.CustomerLoanRepository;
 
@@ -39,4 +41,19 @@ public class CustomerLoanService {
         return "Not Found";
     }
 
+    public String updateLoanStatus(String quoteId, LoanStatusRequest loanStatusRequest) {
+        Optional<LoanApplication> optionalLoanApplication = customerLoanRepository.findByQuoteId(quoteId);
+        if (!optionalLoanApplication.isPresent()){
+            return "No entry found for the quoteId: " + quoteId;
+        }
+        LoanApplication loanApplication = optionalLoanApplication.get().toBuilder().status(LoanStatus.fromValue(loanStatusRequest.getStatus())).build();
+        if (loanStatusRequest.getRemarks()!= null){
+//            LoanApplication loanApp = loanApplication.toBuilder().remarks(loanStatusRequest.getRemarks()).build();
+//            loanRiskRatingsService.updateLoanStatus(loanApplication);
+            loanApplication.setRemarks(loanStatusRequest.getRemarks());
+        }
+        log.info("Loan application is update for quoteId: {}. New response: {} ",quoteId ,loanApplication);
+        loanRiskRatingsService.updateLoanStatus(loanApplication);
+        return "Done";
+    }
 }

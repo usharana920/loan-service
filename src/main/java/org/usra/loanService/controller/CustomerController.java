@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.usra.loanService.dto.LoanApplicationResponse;
 import org.usra.loanService.dto.LoanFormRequest;
 import org.usra.loanService.dto.LoanProcessedStatus;
+import org.usra.loanService.dto.LoanStatusRequest;
 import org.usra.loanService.service.CustomerLoanService;
 
 @Slf4j
@@ -36,6 +37,12 @@ public class CustomerController {
         log.info("CustomerController::getLoanStatus - request received for quoteId: {} ", quoteId);
         String status = customerLoanService.getLoanStatus(quoteId);
         log.info("CustomerController::getLoanStatus::LoanProcessedStatus - response is: {} ", status);
+        return ResponseEntity.ok(LoanProcessedStatus.builder().status(status).build());
+    }
+
+    @PutMapping(value = "/updateLoanStatus/{quoteId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LoanProcessedStatus> updateLoanStatus(@PathVariable String quoteId, @RequestBody LoanStatusRequest loanStatusRequest){
+        String status = customerLoanService.updateLoanStatus(quoteId, loanStatusRequest);
         return ResponseEntity.ok(LoanProcessedStatus.builder().status(status).build());
     }
 }

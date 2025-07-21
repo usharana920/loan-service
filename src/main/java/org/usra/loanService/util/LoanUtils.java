@@ -35,7 +35,7 @@ public class LoanUtils {
         else return 1.99;
     }
 
-    public String generateLoanQuoteId(){
+    public static String generateLoanQuoteId(){
         Random random = new Random();
         return String.valueOf(100_000_000 + random.nextInt(900_000_000));
     }

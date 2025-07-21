@@ -7,7 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 public enum LoanStatus {
 
     LOAN_APPROVED("APPROVED"),
-    LOAN_DENIED("DENIED");
+    LOAN_DENIED("DENIED"),
+    LOAN_UNDER_REVIEW("UNDER_REVIEW");
 
     private final String displayName;
 
